@@ -2,7 +2,7 @@
 
 namespace Sydvest_Bo;
 
-public class SqlCon
+public class SqlManager
 {
     public static string connectionString = @"Data Source=AsbLaptop\SQLEXPRESS;Initial Catalog=sbdb;Integrated Security=True;Trust Server Certificate=True";
     public static void Connect()

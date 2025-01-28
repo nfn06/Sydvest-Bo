@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        SqlCon.Connect();
+        SqlManager.Connect();
         MainMenu();
     }
 

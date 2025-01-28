@@ -1,6 +1,8 @@
-﻿namespace Sydvest_Bo;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
-public class Owners
+namespace Sydvest_Bo
 {
-
+    
 }
