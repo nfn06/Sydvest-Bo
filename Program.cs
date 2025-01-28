@@ -1,29 +1,44 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace Sydvest_Bo;
+﻿namespace Sydvest_Bo;
 
 class Program
 {
-    public static string connectionString = @"Data Source=AsbLaptop\SQLEXPRESS;Initial Catalog=testbase;Integrated Security=True;Trust Server Certificate=True";
     static void Main(string[] args)
     {
-        Connect();
-        Console.WriteLine("Hello, World!");
-        Console.ReadKey();
+        SqlCon.Connect();
+        MainMenu();
     }
-    static void Connect()
+
+    public static void MainMenu()
     {
-        try
+        Console.Clear();
+        Console.WriteLine("Welcome to the Sydvest-Bi Management System!\n");
+        Console.WriteLine("Please select an option by entering the corresponding number:");
+        Console.WriteLine("1. Summer Houses");
+        Console.WriteLine("2. Owners");
+        Console.WriteLine("3. Exit the Program");
+        Console.Write("\nEnter your choice: ");
+        string input = Console.ReadLine();
+
+        switch (input)
         {
-            SqlConnection cnn;
-            cnn = new SqlConnection(connectionString);
-            cnn.Open();
-            Console.WriteLine("Connection True");
-            cnn.Close();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
+            case "1":
+                {
+                    Console.Clear();
+                    break;
+                }
+            case "2":
+                {
+                    Console.Clear();
+                    break;
+                }
+            case "3":
+                {
+                    Console.Clear();
+                    Console.WriteLine("Exiting the program. Goodbye!");
+                    Thread.Sleep(3000);
+                    Environment.Exit(0);
+                    break;
+                }
         }
     }
 }
