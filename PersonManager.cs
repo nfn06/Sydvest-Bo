@@ -3,7 +3,6 @@
 public class PersonManager : ItemManager
 {
     public Pagination Pagi = new();
-    List<string> CurrentResults = new();
     SqlManager SqlManager;
     public int CurrentPage = 1;
 
@@ -48,14 +47,6 @@ public class PersonManager : ItemManager
         }
     }
 
-    internal override void PrintMenu()
-    {
-        Console.Clear();
-        PrintItems();
-        Console.WriteLine("----------------------------");
-        Console.WriteLine("[N]ext, [P]revious, [A]dd, [S]elect or [Q]uit.");
-    }
-
     internal override void PrintItems()
     {
         (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("person", "full_name", CurrentPage, 10);
@@ -77,53 +68,16 @@ public class PersonManager : ItemManager
         SqlManager.Add("person", "full_name", input);
     }
 
-    internal override void Select()
-    {
-        bool validInput = false;
-        int selectedNumber = 0;
-
-        while (!validInput)
-        {
-            Console.Write("Please select a valid number from the above: ");
-            validInput = int.TryParse(Console.ReadLine(), out selectedNumber);
-
-            if (CurrentResults.Count() < selectedNumber)
-                validInput = false;
-        }
-
-        selectedNumber--;
-
-        string input = "";
-
-        while (input != "u" && input != "d")
-        {
-            Console.Clear();
-            Console.WriteLine("[U]pdate or [D]elete?");
-            input = Console.ReadLine().ToLower();
-        }
-
-        switch (input)
-        {
-            case "u":
-                Update(CurrentResults[selectedNumber]);
-                break;
-
-            case "d":
-                Delete(CurrentResults[selectedNumber]);
-                break;
-        }
-    }
-
     internal override void Update(string value)
     {
         Console.WriteLine($"Please type in the new name for {value}");
         string input = Console.ReadLine();
 
-        SqlManager.Update("person", $"full_name = '{input}'", $"full_name = '{value}'");
+        SqlManager.Update("Person", $"full_name = '{input}'", $"full_name = '{value}'");
     }
 
     internal override void Delete(string value)
     {
-        SqlManager.Delete("person", $"full_name = '{value}'");
+        SqlManager.Delete("Person", $"full_name = '{value}'");
     }
 }

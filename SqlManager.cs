@@ -85,5 +85,13 @@ namespace Sydvest_Bo
             var parameters = new Dictionary<string, object>();
             return ExecuteQuery(query, parameters, "region_name");
         }
+
+        public static void Close()
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                cnn.Close();
+            }
+        }
     }
 }
