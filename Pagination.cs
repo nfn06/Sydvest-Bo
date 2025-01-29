@@ -6,8 +6,11 @@ namespace Sydvest_Bo
     {
         public (List<string> results, bool hasMore) GetPaginatedResults(string tableName, string columnName, int pageNumber, int pageSize)
         {
-            List<string> results = new();
-            bool hasMore = false;
+            if (pageNumber < 0)
+                pageNumber = 0;
+            
+            List<string> results;
+            bool hasMore;
 
             string query = $@"
                 SELECT {columnName} 
