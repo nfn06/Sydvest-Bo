@@ -4,6 +4,7 @@ namespace Sydvest_Bo;
 
 class Program
 {
+    public static SqlManager sqlManager = new();
     static void Main(string[] args)
     {
         SqlManager.Connect();
@@ -32,8 +33,8 @@ class Program
             case "2":
                 {
                     Console.Clear();
-                    OwnerManager ownerManager = new();
-                    ownerManager.Main();
+                    PersonManager personManager = new(sqlManager);
+                    personManager.Main();
                     break;
                 }
             case "3":
