@@ -85,6 +85,12 @@ class Program
                     string selectedRegion = regions[choice - 1];
                     Console.Clear();
                     Console.WriteLine($"You selected: {selectedRegion}");
+
+                    int regionId = GetRegionIdByName(selectedRegion);
+
+                    PropertyManager propertyManager = new PropertyManager(sqlManager, regionId);
+                    propertyManager.Main();
+
                     validChoice = true;
                 }
                 else
@@ -97,6 +103,25 @@ class Program
                 Console.WriteLine("No regions found.");
                 break;
             }
+        }
+    }
+    private static int GetRegionIdByName(string regionName)
+    {
+        string query = "SELECT region_id FROM Region WHERE region_name = @regionName";
+        var parameters = new Dictionary<string, object>
+    {
+        { "@regionName", regionName }
+    };
+
+        List<string> results = SqlManager.ExecuteQuery(query, parameters, "region_id");
+
+        if (results.Count > 0)
+        {
+            return int.Parse(results[0]);
+        }
+        else
+        {
+            throw new Exception($"Region '{regionName}' not found.");
         }
     }
 }
