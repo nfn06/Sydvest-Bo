@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-namespace Sydvest_Bo;
 
 namespace Sydvest_Bo
 {
