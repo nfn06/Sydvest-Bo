@@ -25,22 +25,22 @@ namespace Sydvest_Bo
         public static void Add(string tableName, string columns, string values)
         {
             string query = $"INSERT INTO {tableName} ({columns}) VALUES ({values})";
-            ExecuteQuery(query);
+            ExecuteNonQuery(query);
         }
 
         public static void Update(string tableName, string setClause, string condition)
         {
             string query = $"UPDATE {tableName} SET {setClause} WHERE {condition}";
-            ExecuteQuery(query);
+            ExecuteNonQuery(query);
         }
 
         public static void Delete(string tableName, string condition)
         {
             string query = $"DELETE FROM {tableName} WHERE {condition}";
-            ExecuteQuery(query);
+            ExecuteNonQuery(query);
         }
 
-        private static void ExecuteQuery(string query)
+        private static void ExecuteNonQuery(string query)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -50,6 +50,33 @@ namespace Sydvest_Bo
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public static List<string> ExecuteQuery(string query, Dictionary<string, object> parameters, string columnName)
+        {
+            List<string> results = new();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    foreach (var param in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            results.Add(reader[columnName].ToString());
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
     }
 }

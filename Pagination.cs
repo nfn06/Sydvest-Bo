@@ -1,43 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-namespace Sydvest_Bo;
 
-public class Pagination
+namespace Sydvest_Bo
 {
-    private readonly string _connectionString = "Data Source=AsbLaptop\\SQLEXPRESS;Initial Catalog=sbdb;Integrated Security=True;Trust Server Certificate=True";
-
-    public (List<string> results, bool hasMore) GetPaginatedResults(string tableName, string columnName, int pageNumber, int pageSize)
+    public class Pagination
     {
-        List<string> results = new();
-        bool hasMore = false;
-        string query = $@"
-            SELECT {columnName} 
-            FROM {tableName}
-            ORDER BY Id
-            OFFSET @Offset ROWS 
-            FETCH NEXT @PageSize ROWS ONLY;";
-
-        using (SqlConnection conn = new(_connectionString))
+        public (List<string> results, bool hasMore) GetPaginatedResults(string tableName, string columnName, int pageNumber, int pageSize)
         {
-            conn.Open();
-            using (SqlCommand cmd = new(query, conn))
+            List<string> results = new();
+            bool hasMore = false;
+
+            string query = $@"
+                SELECT {columnName} 
+                FROM {tableName}
+                ORDER BY Id
+                OFFSET @Offset ROWS 
+                FETCH NEXT @PageSize ROWS ONLY;";
+
+            var parameters = new Dictionary<string, object>
             {
-                cmd.Parameters.AddWithValue("@Offset", (pageNumber - 1) * pageSize);
-                cmd.Parameters.AddWithValue("@PageSize", pageSize);
+                { "@Offset", (pageNumber - 1) * pageSize },
+                { "@PageSize", pageSize }
+            };
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        results.Add(reader[columnName].ToString());
-                    }
+            results = SqlManager.ExecuteQuery(query, parameters, columnName);
 
-                    hasMore = results.Count == pageSize;
-                }
-            }
+            hasMore = results.Count == pageSize;
+
+            return (results, hasMore);
         }
-
-        return (results, hasMore);
     }
 }
