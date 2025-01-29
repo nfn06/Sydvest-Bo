@@ -107,13 +107,13 @@ class Program
     }
     private static int GetRegionIdByName(string regionName)
     {
-        string query = "SELECT region_id FROM Region WHERE region_name = @regionName";
+        string query = "SELECT Id FROM Region WHERE region_name = @regionName";
         var parameters = new Dictionary<string, object>
     {
         { "@regionName", regionName }
     };
 
-        List<string> results = SqlManager.ExecuteQuery(query, parameters, "region_id");
+        List<string> results = SqlManager.ExecuteQuery(query, parameters, "Id");
 
         if (results.Count > 0)
         {

@@ -51,10 +51,8 @@ public class PropertyManager : ItemManager
 
     internal override void PrintItems()
     {
-        // Hent ejendommene for den valgte region
         (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
 
-        // Filtrer resultaterne for den valgte region efter hentning
         CurrentResults = CurrentResults.Where(item => item.Contains($"Region {SelectedRegionId}")).ToList();
 
         foreach (var item in CurrentResults)
@@ -71,7 +69,6 @@ public class PropertyManager : ItemManager
         Console.Write("Please enter new property address: ");
         string address = Console.ReadLine();
 
-        // Vælg ejendomstype, ejer og region (kan udvides til at være mere detaljeret)
         Console.Write("Enter property type ID: ");
         int typeId = int.Parse(Console.ReadLine() ?? "1");
         Console.Write("Enter owner ID: ");
