@@ -8,7 +8,7 @@ public class OwnerManager : ItemManager
     {
         PrintMenu();
         string input = Console.ReadLine()?.ToLower();
-        
+
         switch (input)
         {
             case "p":
@@ -45,8 +45,14 @@ public class OwnerManager : ItemManager
 
     internal override void PrintItems()
     {
-        Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
-        throw new NotImplementedException();
+        var (results, hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
+
+        foreach (var item in results)
+        {
+            Console.WriteLine(item);
+        }
+
+        Console.WriteLine(hasMore ? "More results available..." : "End of results.");
     }
 
     internal override void Add()
