@@ -6,9 +6,9 @@ namespace Sydvest_Bo
     {
         public (List<string> results, bool hasMore) GetPaginatedResults(string tableName, string columnName, int pageNumber, int pageSize)
         {
-            if (pageNumber < 0)
-                pageNumber = 0;
-            
+            if (pageNumber < 1)
+                pageNumber = 1;
+
             List<string> results;
             bool hasMore;
 

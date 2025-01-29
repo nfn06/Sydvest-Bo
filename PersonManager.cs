@@ -34,12 +34,12 @@ public class PersonManager : ItemManager
 
                 case "a":
                     Add();
-                    PrintMenu();
+                    input = "q";
                     break;
 
                 case "s":
                     Select();
-                    PrintMenu();
+                    input = "q";
                     break;
 
                 default:
@@ -58,7 +58,7 @@ public class PersonManager : ItemManager
 
     internal override void PrintItems()
     {
-        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("person", "address", CurrentPage, 10);
+        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("person", "full_name", CurrentPage, 10);
 
         foreach (var item in CurrentResults)
         {
@@ -91,13 +91,15 @@ public class PersonManager : ItemManager
                 validInput = false;
         }
 
+        selectedNumber--;
+
         string input = "";
-        
-        while (input != "u" || input != "d")
+
+        while (input != "u" && input != "d")
         {
             Console.Clear();
             Console.WriteLine("[U]pdate or [D]elete?");
-            input = Console.ReadLine();
+            input = Console.ReadLine().ToLower();
         }
 
         switch (input)
@@ -107,7 +109,7 @@ public class PersonManager : ItemManager
                 break;
 
             case "d":
-                Update(CurrentResults[selectedNumber]);
+                Delete(CurrentResults[selectedNumber]);
                 break;
         }
     }
@@ -117,11 +119,11 @@ public class PersonManager : ItemManager
         Console.WriteLine($"Please type in the new name for {value}");
         string input = Console.ReadLine();
 
-        SqlManager.Update("person", $"first_name = {input}", $"where first_name = {value}");
+        SqlManager.Update("person", $"full_name = '{input}'", $"full_name = '{value}'");
     }
 
     internal override void Delete(string value)
     {
-        SqlManager.Delete("person", $"first_name = {value}");
+        SqlManager.Delete("person", $"full_name = '{value}'");
     }
 }

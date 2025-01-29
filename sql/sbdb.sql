@@ -39,7 +39,7 @@ CREATE TABLE Property (
     fk_owner INT NOT NULL,
     fk_region INT NOT NULL,
     FOREIGN KEY (fk_type) REFERENCES Type(Id),
-    FOREIGN KEY (fk_owner) REFERENCES Person(Id),
+    FOREIGN KEY (fk_owner) REFERENCES Person(Id) ON DELETE CASCADE,
     FOREIGN KEY (fk_region) REFERENCES Region(Id)
 );
 
