@@ -8,31 +8,30 @@ public class OwnerManager : ItemManager
     {
         PrintMenu();
         string input = Console.ReadLine()?.ToLower();
-
-        switch (input)
+        while (input != "q")
         {
-            case "p":
-                CurrentPage--;
-                PrintMenu();
-                break;
+            switch (input)
+            {
+                case "p":
+                    CurrentPage--;
+                    PrintMenu();
+                    break;
 
-            case "n":
-                CurrentPage++;
-                PrintMenu();
-                break;
+                case "n":
+                    CurrentPage++;
+                    PrintMenu();
+                    break;
 
-            case "a":
-                Add();
-                break;
+                case "a":
+                    break;
 
-            case "s":
-                break;
+                case "s":
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
-
-        throw new NotImplementedException();
     }
 
     internal override void PrintMenu()
