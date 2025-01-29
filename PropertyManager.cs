@@ -48,19 +48,15 @@ public class PropertyManager : ItemManager
             }
         }
     }
-
     internal override void PrintItems()
     {
-        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
+        (List<string> CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
 
-        CurrentResults = CurrentResults.Where(item => item.Contains($"Region {SelectedRegionId}")).ToList();
-
-        foreach (var item in CurrentResults)
+        Console.WriteLine("Results:");
+        foreach (var result in CurrentResults)
         {
-            Console.WriteLine(item);
+            Console.WriteLine(result);
         }
-
-        Console.WriteLine(hasMore ? "More results available..." : "End of results.");
     }
 
     internal override void Add()
