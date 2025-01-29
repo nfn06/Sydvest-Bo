@@ -48,41 +48,38 @@ public class PropertyManager : ItemManager
             }
         }
     }
+
     internal override void PrintItems()
     {
-        (List<string> CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
+        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("property", "address", CurrentPage, 10);
 
-        Console.WriteLine("Results:");
-        foreach (var result in CurrentResults)
+        foreach (var item in CurrentResults)
         {
-            Console.WriteLine(result);
+            Console.WriteLine(item);
         }
+
+        Console.WriteLine(hasMore ? "More results available..." : "End of results.");
     }
 
     internal override void Add()
     {
         Console.Clear();
-        Console.Write("Please enter new property address: ");
-        string address = Console.ReadLine();
-
-        Console.Write("Enter property type ID: ");
-        int typeId = int.Parse(Console.ReadLine() ?? "1");
-        Console.Write("Enter owner ID: ");
-        int ownerId = int.Parse(Console.ReadLine() ?? "1");
-
-        SqlManager.Add("property", "address, fk_type, fk_owner, fk_region", $"'{address}', {typeId}, {ownerId}, {SelectedRegionId}");
-    }
-
-    internal override void Update(string value)
-    {
-        Console.WriteLine($"Please type in the new address for property {value}");
+        Console.Write("Please enter the addres to the property: ");
         string input = Console.ReadLine();
 
-        SqlManager.Update("Property", $"address = '{input}'", $"address = '{value}' AND fk_region = {SelectedRegionId}");
+        SqlManager.Add("property", "address", input);
+    }
+    
+    internal override void Update(string value)
+    {
+        Console.WriteLine($"Please type in the name of the new owner {value}");
+        string input = Console.ReadLine();
+
+        SqlManager.Update("Person", $"full_name = '{input}'", $"full_name = '{value}'");
     }
 
     internal override void Delete(string value)
     {
-        SqlManager.Delete("Property", $"address = '{value}' AND fk_region = {SelectedRegionId}");
+        SqlManager.Delete("Person", $"full_name = '{value}'");
     }
 }
