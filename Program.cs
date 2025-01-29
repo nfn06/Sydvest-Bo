@@ -29,6 +29,8 @@ class Program
             case "2":
                 {
                     Console.Clear();
+                    OwnerManager ownerManager = new();
+                    ownerManager.Main();
                     break;
                 }
             case "3":

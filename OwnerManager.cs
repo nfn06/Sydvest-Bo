@@ -15,11 +15,13 @@ public class OwnerManager : ItemManager
                 case "p":
                     CurrentPage--;
                     PrintMenu();
+                    input = Console.ReadLine()?.ToLower();
                     break;
 
                 case "n":
                     CurrentPage++;
                     PrintMenu();
+                    input = Console.ReadLine()?.ToLower();
                     break;
 
                 case "a":
@@ -36,10 +38,10 @@ public class OwnerManager : ItemManager
 
     internal override void PrintMenu()
     {
+        Console.Clear();
         PrintItems();
         Console.WriteLine("----------------------------");
         Console.WriteLine("[N]ext, [P]revious, [A]dd, [S]elect or [Q]uit.");
-        throw new NotImplementedException();
     }
 
     internal override void PrintItems()
