@@ -6,6 +6,7 @@ public abstract class ItemManager
     internal abstract void PrintMenu();
     internal abstract void PrintItems();
     internal abstract void Add();
-    internal abstract void Update();
-    internal abstract void Delete();
+    internal abstract void Select();
+    internal abstract void Update(string values);
+    internal abstract void Delete(string values);
 }
