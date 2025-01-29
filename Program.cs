@@ -9,6 +9,8 @@ class Program
     {
         SqlManager.Connect();
         MainMenu();
+
+        SqlManager.Close();
     }
 
     public static void MainMenu()
