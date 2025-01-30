@@ -24,7 +24,7 @@ namespace Sydvest_Bo
 
         public static void Add(string tableName, string columns, string values)
         {
-            string query = $"INSERT INTO {tableName} ({columns}) VALUES ('{values}')";
+            string query = $"INSERT INTO {tableName} ({columns}) VALUES ({values})";
             ExecuteNonQuery(query);
         }
 
