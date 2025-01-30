@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Text;
+using Microsoft.Data.SqlClient;
 
 namespace Sydvest_Bo
 {
@@ -70,7 +71,13 @@ namespace Sydvest_Bo
                     {
                         while (reader.Read())
                         {
-                            results.Add(reader[columnName].ToString());
+                            StringBuilder combinedResult = new();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                combinedResult.Append(reader[i] + "   ");
+                            }
+
+                            results.Add(combinedResult.ToString());
                         }
                     }
                 }
