@@ -49,15 +49,24 @@ public class PersonManager : ItemManager
 
     internal override void PrintItems()
     {
-        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("person", "full_name", CurrentPage, 10);
+        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("person", "*", CurrentPage, 10);
+
+        int index = (CurrentPage - 1) * 10 + 1;
 
         foreach (var item in CurrentResults)
         {
-            Console.WriteLine(item);
+            string[] columns = item.Split(new[] { "   " }, 2, StringSplitOptions.RemoveEmptyEntries);
+
+            if (columns.Length > 1)
+            {
+                Console.WriteLine($"{index}. {columns[1]}");
+                index++;
+            }
         }
 
         Console.WriteLine(hasMore ? "More results available..." : "End of results.");
     }
+
 
     internal override void Add()
     {
@@ -70,10 +79,11 @@ public class PersonManager : ItemManager
 
     internal override void Update(string value)
     {
-        Console.WriteLine($"Please type in the new name for {value}");
+        string[] split = value.Split("   ");
+        Console.WriteLine($"Please type in the new name for {split[1]}");
         string input = Console.ReadLine();
 
-        SqlManager.Update("Person", $"full_name = '{input}'", $"full_name = '{value}'");
+        SqlManager.Update("Person", $"full_name = '{input}'", $"full_name = '{split[1]}'");
     }
 
     internal override void Delete(string value)
