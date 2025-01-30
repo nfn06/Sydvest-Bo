@@ -51,11 +51,19 @@ public class ReservationManager : ItemManager
 
     internal override void PrintItems()
     {
-        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("reservation", "full_name", CurrentPage, 10);
+        (CurrentResults, bool hasMore) = Pagi.GetPaginatedResults("reservation", "*", CurrentPage, 10);
+
+        int index = (CurrentPage - 1) * 10 + 1;
 
         foreach (var item in CurrentResults)
         {
-            Console.WriteLine(item);
+            string[] columns = item.Split(new[] { "   " }, 2, StringSplitOptions.RemoveEmptyEntries);
+
+            if (columns.Length > 1)
+            {
+                Console.WriteLine($"{index}. {columns[1]}");
+                index++;
+            }
         }
 
         Console.WriteLine(hasMore ? "More results available..." : "End of results.");
@@ -83,7 +91,7 @@ public class ReservationManager : ItemManager
             endDate = Console.ReadLine();
         }
 
-        SqlManager.Add("reservation", "full_name", $"'{name}',DATE({startDate}),DATE({startDate}),{PropertyId}");
+        SqlManager.Add("reservation", "customer, start_date, end_date, fk_property", $"'{name}','{startDate}','{startDate}',{PropertyId}");
     }
 
     internal override void Update(string value)
@@ -110,13 +118,14 @@ public class ReservationManager : ItemManager
 
         string[] split = value.Split("   ");
 
-        SqlManager.Update("reservation", $"customer = '{name}', start_date = DATE('{startDate}'), end_date = DATE('{endDate}')", $"customer = '{split[0]}', start_date = DATE('{split[1]}'), end_date = DATE('{split[2]}')");
+        SqlManager.Update("reservation", $"customer = '{name}', start_date = '{startDate}', end_date = '{endDate}'", $"Id = {split[0]}");
     }
 
     internal override void Delete(string value)
     {
         string[] split = value.Split("   ");
 
-        SqlManager.Delete("reservation", $"customer = '{split[0]}', start_date = DATE('{split[1]}'), end_date = DATE('{split[2]}')");
+
+        SqlManager.Delete("reservation", $"Id = {split[0]}");
     }
 }

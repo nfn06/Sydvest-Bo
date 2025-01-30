@@ -74,7 +74,10 @@ namespace Sydvest_Bo
                             StringBuilder combinedResult = new();
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                combinedResult.Append(reader[i] + "   ");
+                                string valueToAdd = reader[i].ToString();
+                                valueToAdd = valueToAdd.Replace("  ", "");
+                                valueToAdd = valueToAdd.Replace("00.00.00", "");
+                                combinedResult.Append(valueToAdd + "   ");
                             }
 
                             results.Add(combinedResult.ToString());
