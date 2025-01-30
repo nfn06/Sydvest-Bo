@@ -11,16 +11,8 @@ END
 USE sbdb;
 GO
 
-DROP TABLE IF EXISTS Reservation, Property, Person, Type, Region;
+DROP TABLE IF EXISTS Reservation, Property, Person, Region;
 GO
-
-CREATE TABLE Type (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    type_name CHAR(50) NOT NULL,
-    area CHAR(50) NOT NULL,
-    beds CHAR(50) NOT NULL,
-    quality_level CHAR(50) NOT NULL
-);
 
 CREATE TABLE Region (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -35,11 +27,8 @@ CREATE TABLE Person (
 CREATE TABLE Property (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     address CHAR(50) NOT NULL,
-    fk_type INT NOT NULL,
-    fk_owner INT NOT NULL,
+    owner CHAR(50) NOT NULL,
     fk_region INT NOT NULL,
-    FOREIGN KEY (fk_type) REFERENCES Type(Id),
-    FOREIGN KEY (fk_owner) REFERENCES Person(Id) ON DELETE CASCADE,
     FOREIGN KEY (fk_region) REFERENCES Region(Id)
 );
 
