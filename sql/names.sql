@@ -1,12 +1,5 @@
 USE sbdb;
 
-INSERT INTO Type (type_name, area, beds, quality_level)
-VALUES 
-('Lille sommerhus', '50 m²', '2 senge', 'Standard'),
-('Mellemstort sommerhus', '80 m²', '4 senge', 'Høj'),
-('Stort sommerhus', '120 m²', '6 senge', 'Super'),
-('Luksus sommerhus', '200 m²', '8 senge', 'Luksus');
-
 INSERT INTO Region (region_name)
 VALUES 
 ('Vestkysten'),
@@ -22,12 +15,12 @@ VALUES
 ('Mette Nielsen'),
 ('Lars Pedersen');
 
-INSERT INTO Property (address, fk_type, fk_owner, fk_region)
+INSERT INTO Property (address, owner, fk_region)
 VALUES 
-('Strandvejen 1, 6700 Esbjerg', 1, 1, 1), 
-('Skovvej 5, 5700 Svendborg', 2, 2, 2),   
-('Havnevej 10, 9900 Frederikshavn', 3, 3, 3),
-('Kystvej 20, 3700 Rønne', 4, 4, 4);      
+('Strandvejen 1, 6700 Esbjerg', 'Anders Hansen', 1), 
+('Skovvej 5, 5700 Svendborg','Sofie Petersen', 2),   
+('Havnevej 10, 9900 Frederikshavn', 'Jens Andersen', 3),
+('Kystvej 20, 3700 Rønne', 'Maria Sørensen', 4);      
 
 INSERT INTO Reservation (customer, start_date, end_date, fk_property)
 VALUES 

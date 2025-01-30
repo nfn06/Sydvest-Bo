@@ -61,7 +61,8 @@ public class ReservationManager : ItemManager
 
             if (columns.Length > 1)
             {
-                Console.WriteLine($"{index}. {columns[1]}");
+                if (columns[1].Split("   ")[3].Replace(" ", "") == PropertyId.ToString())
+                    Console.WriteLine($"{index}. {columns[1]}");
                 index++;
             }
         }

@@ -5,23 +5,13 @@ namespace Sydvest_Bo;
 class Program
 {
     public static SqlManager sqlManager = new();
-    //static void Main(string[] args)
-    //{
-    //    SqlManager.Connect();
-    //    MainMenu();
-
-    //    SqlManager.Close();
-    //}
-
     static void Main(string[] args)
     {
         SqlManager.Connect();
-        ReservationManager rm = new(sqlManager, 1);
-        rm.Main();
+        MainMenu();
 
         SqlManager.Close();
     }
-
 
     public static void MainMenu()
     {
@@ -96,6 +86,8 @@ class Program
                     Console.Clear();
                     Console.WriteLine($"You selected: {selectedRegion}");
                     validChoice = true;
+                    PropertyManager propertyManager = new(sqlManager, choice);
+                    propertyManager.Main();
                 }
                 else
                 {
