@@ -5,13 +5,23 @@ namespace Sydvest_Bo;
 class Program
 {
     public static SqlManager sqlManager = new();
+    //static void Main(string[] args)
+    //{
+    //    SqlManager.Connect();
+    //    MainMenu();
+
+    //    SqlManager.Close();
+    //}
+
     static void Main(string[] args)
     {
         SqlManager.Connect();
-        MainMenu();
+        ReservationManager rm = new(sqlManager, 1);
+        rm.Main();
 
         SqlManager.Close();
     }
+
 
     public static void MainMenu()
     {
